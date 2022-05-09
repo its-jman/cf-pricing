@@ -207,8 +207,9 @@
 
                 if (chart) {
                     chart.data.datasets[0].data = this.months.map(x => (x.total).toFixed(2))
-                    chart.data.datasets[1].data = this.months.map(x => (x.aws_total).toFixed(2))
-                    chart.data.datasets[2].data = this.months.map(x => (x.digitalocean_total).toFixed(2))
+                    chart.data.datasets[1].data = this.months.map(x => (x.digitalocean_total).toFixed(2))
+                    chart.data.datasets[2].data = this.months.map(x => (x.aws_total).toFixed(2))
+                    
                     chart.update()
                     return
                 }
