@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --host",
-    "build": "npm i sass && vite build",
+    "build": "npm i -g sass && vite build",
     "serve": "vite preview --host"
   },
   "dependencies": {
