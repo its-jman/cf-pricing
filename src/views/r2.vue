@@ -16,7 +16,7 @@
         </div>
 
         <p class="font-medium text-gray-300 mt-2 mb-2">
-            With an inital bucket size of {{pricing.files_stored * (pricing.average_file_size / 1000)}}GB, growing by {{  pricing.writes * (pricing.average_file_size / 1000) }}GB per month.
+            With an inital bucket size of {{(pricing.files_stored * (pricing.average_file_size / 1000)).toFixed(2)}}GB, growing by {{ (pricing.writes * (pricing.average_file_size / 1000)).toFixed(2) }}GB per month.
         </p>
 
         <canvas id="myChart" class="w-full mb-2" height="350" ref="canvas"></canvas>
@@ -25,7 +25,7 @@
             Pricing is estimated on the values below, adding the writes to the bucket each month. In production, this value will change and fluctuate however for estimation purposes, it is linear. us-east-1 used for S3 pricing, egress fees added (13% of the bucket read once and sent across the internet).
         </p>
 
-        <o-field v-if="ready" class="mb-4" :label="`How many files are you currently storing? (using ${pricing.files_stored * (pricing.average_file_size / 1000)}GB)`">
+        <o-field v-if="ready" class="mb-4" :label="`How many files are you currently storing? (using ${(pricing.files_stored * (pricing.average_file_size / 1000)).toFixed(2)}GB)`">
             <o-input  type="number" class="field w-full my-2" :min="1" v-model="pricing.files_stored"/>
         </o-field>
 
