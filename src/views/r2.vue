@@ -19,13 +19,15 @@
             With an initial bucket size of {{(pricing.files_stored * (pricing.average_file_size / 1000)).toFixed(2)}}GB, growing by {{ (pricing.writes * (pricing.average_file_size / 1000)).toFixed(2) }}GB per month:
         </p>
 
-        <canvas id="myChart" class="w-full mb-2" height="350" style="max-height:400px;" ref="canvas"></canvas>
+        {{chart_id}}
+
+        <canvas :key="chart_id" class="w-full mb-2" height="350" style="max-height:400px;" ref="canvas"></canvas>
 
         <p class="text-gray-300 text-center text-xs mb-12 block">
-            Pricing is estimated on the values below, adding the writes to the bucket each month. In production, this value will change and fluctuate however for estimation purposes, it is linear. us-east-1 used for S3 pricing, egress fees added (13% of the bucket read once and sent across the internet).
+            Pricing is estimated on the values below, adding the writes to the bucket each month. In production, this value will change and fluctuate however for estimation purposes, it is linear. us-east-1 used for S3 pricing, egress fees added ({{egress}}% of the bucket read once and sent across the internet).
         </p>
 
-        <o-field label="how many of your files are being read per month, as a percentage of your bucket?" message="This is used to show how much S3 costs you in egress fees to send across the internet. R2 has no egress fees for inbound or outbound traffic.">
+        <o-field label="How many of your files are being read per month, as a percentage of your bucket?" message="This is used to show how much S3 costs you in egress fees to send across the internet. R2 has no egress fees for inbound or outbound traffic.">
             <o-slider v-model="egress" :max="300" :step="1"  :custom-formatter="val => val + '% of your bucket being read once'"></o-slider>
         </o-field>
 
@@ -77,6 +79,7 @@
         data: () => ({
             human,
             humanize,
+            chart_id: 0,
             mode: 'simple',
             ready: false,
             show_preview_modal: false,
@@ -140,9 +143,8 @@
             }
         },
         beforeDestroy() {
-            this.chart.destroy()
-            this.chart = null
-
+            chart.destroy()
+            chart = null
         },
         methods: {
             share(extra) {
@@ -221,11 +223,13 @@
                 this.share()
             },
             async render_chart() {
+                console.log('RENDER CHART')
                 if (!this.months.length) {
                     await new Promise(r => setTimeout(r, 1000))
                 }
 
                 if (chart) {
+                    console.log('CHART ALREADYT EXISTS')
                     chart.data.datasets[0].data = this.months.map(x => (x.total).toFixed(2))
                     chart.data.datasets[1].data = this.months.map(x => (x.digitalocean_total).toFixed(2))
                     chart.data.datasets[2].data = this.months.map(x => (x.aws_total).toFixed(2))
@@ -233,6 +237,8 @@
                     chart.update()
                     return
                 }
+
+                console.log('RENDER CHART')
 
                 const ctx = this.$refs.canvas.getContext('2d')
 
@@ -314,10 +320,13 @@
             },
         },
         mounted() {
+            chart = null
             this.amount_of_reqs = parseInt(this.$route.query.rpm || '100000')
             this.seconds_per_req = parseFloat(this.$route.query.spr || '1')
             this.ready = true
             this.$nextTick(this.work_out_cost)
+
+            this.canvas_id = (Math.random() * 100000).toFixed()
 
             setTimeout(() => {
                 if (this.$route.query.url) {
