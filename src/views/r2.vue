@@ -9,7 +9,7 @@
             </p>
         </div>
 
-        <div class="flex flex-col md:flex-row mb-8 items-center">
+        <div class="flex flex-col md:flex-row mb-8 items-center" v-if="months.length">
             <h1 class="title text-purple-400 block mb-4 md:mb-0 flex-grow">
                 Total (first month): ${{((months[0] || {}).total).toFixed(2)}}
             </h1>
@@ -200,8 +200,11 @@
                 this.setMeta()
                 this.share()
             },
-            render_chart() {
-                console.log('woof')
+            async render_chart() {
+                if (!this.months.length) {
+                    await new Promise(r => setTimeout(r, 1000))
+                }
+
                 if (chart) {
                     chart.data.datasets[0].data = this.months.map(x => (x.total).toFixed(2))
                     chart.data.datasets[1].data = this.months.map(x => (x.aws_total).toFixed(2))
