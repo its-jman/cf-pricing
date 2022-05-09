@@ -16,7 +16,7 @@
         </div>
 
         <p class="font-medium text-gray-300 mt-2 mb-2">
-            With an inital bucket size of {{(pricing.files_stored * (pricing.average_file_size / 1000)).toFixed(2)}}GB, growing by {{ (pricing.writes * (pricing.average_file_size / 1000)).toFixed(2) }}GB per month.
+            With an initial bucket size of {{(pricing.files_stored * (pricing.average_file_size / 1000)).toFixed(2)}}GB, growing by {{ (pricing.writes * (pricing.average_file_size / 1000)).toFixed(2) }}GB per month.
         </p>
 
         <canvas id="myChart" class="w-full mb-2" height="350" ref="canvas"></canvas>
