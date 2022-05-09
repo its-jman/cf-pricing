@@ -159,19 +159,22 @@
                 Array.from({length: 24}, (x, i) => i).forEach(month => {
                     const used_files = last_months_used_files + parseInt(this.pricing.writes)
 
-                    const work_out_total = (name, rates) => {
+                    const work_out_total = (name, rates, free) => {
+                        if (free === undefined) {free = {}}
+
                         var total = 0
                         const gb_used = used_files * (parseInt(this.pricing.average_file_size) / 1000)
                         const gb_actual = gb_used - (rates.included_storage || 0)
                         total += gb_actual > 0 ? gb_actual * rates.average_file_size : 0
-                        total += parseInt(this.pricing.reads) * rates.reads
-                        total += parseInt(this.pricing.writes) * rates.writes
-                        total += parseInt(this.pricing.update_deletes) * rates.update_deletes
+
+                        total += Math.max(parseInt(this.pricing.reads) - (free.reads || 0), 0) * rates.reads
+                        total += Math.max(parseInt(this.pricing.writes) - (free.writes || 0), 0)  * rates.writes
+                        total += Math.max(parseInt(this.pricing.update_deletes) - (free.update_deletes || 0), 0)  * rates.update_deletes
 
                         return total
                     }
 
-                    var total = work_out_total('R2', this.rates)
+                    var total = work_out_total('R2', this.rates, this.free_tiers)
                     var aws_total = work_out_total('S3', this.aws_rates)
                     var digitalocean_total = 5 + work_out_total('SP', this.digitalocean_rates)
 
