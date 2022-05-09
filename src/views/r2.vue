@@ -5,7 +5,7 @@
                 ☁ Explaining the costs
             </b><br/>
             <p>
-                R2 has no bandwidth costs, for ingesting or exgress. However it is designed as a "hot" storage. This means files are fast to access however cost more than a backup solution such as Backblaze's B2®.
+                R2 has no bandwidth costs, for ingesting or egress. However it is designed as a "hot" storage. This means files are fast to access however cost more than a backup solution such as Backblaze's B2®.
             </p>
         </div>
 
