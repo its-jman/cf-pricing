@@ -11,6 +11,7 @@
     "a17t": "^0.10.1",
     "humanize": "0.0.9",
     "humanize-plus": "^1.8.2",
+    "sass": "^1.51.0",
     "vue": "^3.2.33",
     "vue-numeric": "^2.4.3",
     "vue-router": "^4.0.15"
@@ -24,6 +25,7 @@
     "@tailwindcss/typography": "^0.5.2",
     "@types/tailwindcss": "^3.0.10",
     "@vitejs/plugin-vue": "^2.3.2",
+    "sass": "^1.51.0",
     "autoprefixer": "^10.4.7",
     "prettier-plugin-tailwindcss": "^0.1.10",
     "tailwindcss": "^3.0.24",
