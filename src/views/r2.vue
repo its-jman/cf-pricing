@@ -18,9 +18,7 @@
         <p class="font-medium text-gray-300 mt-2 mb-2">
             With an initial bucket size of {{(pricing.files_stored * (pricing.average_file_size / 1000)).toFixed(2)}}GB, growing by {{ (pricing.writes * (pricing.average_file_size / 1000)).toFixed(2) }}GB per month:
         </p>
-
-        {{chart_id}}
-
+        
         <canvas :key="chart_id" class="w-full mb-2" height="350" style="max-height:400px;" ref="canvas"></canvas>
 
         <p class="text-gray-300 text-center text-xs mb-12 block">
