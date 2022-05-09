@@ -25,7 +25,7 @@
             Pricing is estimated on the values below, adding the writes to the bucket each month. In production, this value will change and fluctuate however for estimation purposes, it is linear. us-east-1 used for S3 pricing, egress fees added (13% of the bucket read once and sent across the internet).
         </p>
 
-        <o-field label="How many files are you sending per month, as a percentage of your bucket?" message="This is used to show how much S3 costs you in egress fees to send across the internet. R2 has no egress fees for inbound or outbound traffic.">
+        <o-field label="how many of your files are being read per month, as a percentage of your bucket?" message="This is used to show how much S3 costs you in egress fees to send across the internet. R2 has no egress fees for inbound or outbound traffic.">
             <o-slider v-model="egress" :max="300" :step="1"  :custom-formatter="val => val + '% of your bucket being read once'"></o-slider>
         </o-field>
 
@@ -138,6 +138,11 @@
             $route() {
                 this.work_out_cost()
             }
+        },
+        beforeDestroy() {
+            this.chart.destroy()
+            this.chart = null
+
         },
         methods: {
             share(extra) {
