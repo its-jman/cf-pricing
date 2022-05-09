@@ -34,7 +34,7 @@
                 <b>First 1 million requests are free</b>
                 <br/>
                 <br/>
-                <b>💾 Memory:</b> Each Worker you execute uses 128mb of memory, this is not changable yet. You are charged per millisecond the Worker runs.
+                <b>💾 Memory:</b> Each Worker you execute uses 128mb of memory, this is not changable yet. You are charged per millisecond the Worker runs and are billed for each 128MB you use during that time.
                 <br/>
                 <b>First 400,000-GBs are free.</b>
                 <br/>
