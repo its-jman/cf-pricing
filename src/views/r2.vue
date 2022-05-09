@@ -18,7 +18,7 @@
         <p class="font-medium text-gray-300 mt-2 mb-2">
             With an initial bucket size of {{(pricing.files_stored * (pricing.average_file_size / 1000)).toFixed(2)}}GB, growing by {{ (pricing.writes * (pricing.average_file_size / 1000)).toFixed(2) }}GB per month:
         </p>
-        
+
         <canvas :key="chart_id" class="w-full mb-2" height="350" style="max-height:400px;" ref="canvas"></canvas>
 
         <p class="text-gray-300 text-center text-xs mb-12 block">
@@ -221,13 +221,11 @@
                 this.share()
             },
             async render_chart() {
-                console.log('RENDER CHART')
                 if (!this.months.length) {
                     await new Promise(r => setTimeout(r, 1000))
                 }
 
                 if (chart) {
-                    console.log('CHART ALREADYT EXISTS')
                     chart.data.datasets[0].data = this.months.map(x => (x.total).toFixed(2))
                     chart.data.datasets[1].data = this.months.map(x => (x.digitalocean_total).toFixed(2))
                     chart.data.datasets[2].data = this.months.map(x => (x.aws_total).toFixed(2))
@@ -235,8 +233,6 @@
                     chart.update()
                     return
                 }
-
-                console.log('RENDER CHART')
 
                 const ctx = this.$refs.canvas.getContext('2d')
 
@@ -246,7 +242,7 @@
                         labels: this.months.map(x => 'Month ' + (x.month + 1)),
                         datasets: [
                             {
-                                label: 'Cloudflare R2®',
+                                label: 'Cloudflare R2™',
                                 fill: 'origin',
                                 pointHitRadius: 10,
                                 
@@ -256,7 +252,7 @@
                                 borderWidth: 1
                             },
                             {
-                                label: 'DigitalOcean Spaces®',
+                                label: 'DigitalOcean Spaces™',
                                 fill: 'origin',
                                 pointHitRadius: 10,
                                 backgroundColor: '#0069ff',
