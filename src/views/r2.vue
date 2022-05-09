@@ -179,7 +179,7 @@
 
                     // work out AWS egress
                     // based on 13% of the bucket being sent over the internet
-                    const files_to_send = (last_months_used_files * 13) / 100
+                    const files_to_send = (last_months_used_files * 26) / 100
 
                     aws_total += files_to_send * (parseInt(this.pricing.average_file_size) / 1000) * 0.09
 
