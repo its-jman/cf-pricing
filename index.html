@@ -12,10 +12,25 @@
       type="font/woff2"
       crossorigin="anonymous"
     />
+
+    <meta name="title" content="Cloudflare Workers™ pricing calculator">
+    <meta name="description" content="Estimate your next bill, see the price difference. Unofficial calculator for Cloudflare Workers Unbound, Cloudflare R2, and KV.">
+    <meta name="keywords" content="cloudflare, workers, pricing, durable objects, workers kv, unbound, cloudflare unbound">
+    <meta name="robots" content="index, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="45 days">
+
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-gradient"></script>
     <!-- <link rel="preload" href="/font/Inter-italic.var.woff2" as="font" type="font/woff2" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="/font/inter.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://constellations.tech/favicon-32x32.png">
   </head>
-  <body>
+  <!--
+    To make the scrollbar styled for dark mode, we can set the background color for the body itself and the scroll will be based on that
+    We also force overflow-y: scroll to prevent content shift when changing to pages with less content than the screen.
+  -->
+  <body style="background:#171717;overflow-y:scroll;">
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>

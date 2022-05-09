@@ -9,21 +9,25 @@
             </p>
         </div>
 
-        <div class="flex flex-col md:flex-row mb-8 items-center" v-if="months.length">
+        <div class="flex flex-col md:flex-row mb-2 items-center" v-if="months.length">
             <h1 class="title text-purple-400 block mb-4 md:mb-0 flex-grow">
                 Total (first month): ${{((months[0] || {}).total).toFixed(2)}}
             </h1>
         </div>
 
         <p class="font-medium text-gray-300 mt-2 mb-2">
-            With an initial bucket size of {{(pricing.files_stored * (pricing.average_file_size / 1000)).toFixed(2)}}GB, growing by {{ (pricing.writes * (pricing.average_file_size / 1000)).toFixed(2) }}GB per month.
+            With an initial bucket size of {{(pricing.files_stored * (pricing.average_file_size / 1000)).toFixed(2)}}GB, growing by {{ (pricing.writes * (pricing.average_file_size / 1000)).toFixed(2) }}GB per month:
         </p>
 
-        <canvas id="myChart" class="w-full mb-2" height="350" ref="canvas"></canvas>
+        <canvas id="myChart" class="w-full mb-2" height="350" style="max-height:400px;" ref="canvas"></canvas>
 
         <p class="text-gray-300 text-center text-xs mb-12 block">
             Pricing is estimated on the values below, adding the writes to the bucket each month. In production, this value will change and fluctuate however for estimation purposes, it is linear. us-east-1 used for S3 pricing, egress fees added (13% of the bucket read once and sent across the internet).
         </p>
+
+        <o-field label="How many files are you sending per month, as a percentage of your bucket?" message="This is used to show how much S3 costs you in egress fees to send across the internet. R2 has no egress fees for inbound or outbound traffic.">
+            <o-slider v-model="egress" :max="300" :step="1"  :custom-formatter="val => val + '% of your bucket being read once'"></o-slider>
+        </o-field>
 
         <o-field v-if="ready" class="mb-4" :label="`How many files are you currently storing? (using ${(pricing.files_stored * (pricing.average_file_size / 1000)).toFixed(2)}GB)`">
             <o-input  type="number" class="field w-full my-2" :min="1" v-model="pricing.files_stored"/>
@@ -112,7 +116,7 @@
             },
             months: [],
             aws_months: [],
-
+            egress: 25,
             total: 0,
             preview_url: '',
             loading_preview: false,
@@ -125,6 +129,15 @@
                 }),
                 deep: true
             },
+            egress: {
+                handler: debounce(function () {
+                    this.work_out_cost()
+                }),
+                deep: true
+            },
+            $route() {
+                this.work_out_cost()
+            }
         },
         methods: {
             share(extra) {
@@ -148,7 +161,6 @@
                 create_tag('theme-color', '#9561e2')
             },
             work_out_cost() {
-                if (!this.ready) {return}
                 this.months = []
 
                 var last_months_used_files = parseInt(this.pricing.files_stored)
@@ -182,7 +194,7 @@
 
                     // work out AWS egress
                     // based on 13% of the bucket being sent over the internet
-                    const files_to_send = (last_months_used_files * 26) / 100
+                    const files_to_send = (last_months_used_files * this.egress) / 100
 
                     aws_total += files_to_send * (parseInt(this.pricing.average_file_size) / 1000) * 0.09
 
@@ -228,6 +240,7 @@
                                 label: 'Cloudflare R2®',
                                 fill: 'origin',
                                 pointHitRadius: 10,
+                                
                                 backgroundColor: '#f48120', // Put the gradient here as a fill color
                                 data: this.months.map(x => (x.total).toFixed(2)),
                                 total_size: this.months.map(x => x.files_in_store),
@@ -256,12 +269,12 @@
                             yAxes: {
                                 ticks: {
                                     beginAtZero: true,
-                                    fontColor: 'grey'
+                                    fontColor: 'lightgrey'
                                 },
                             },
                             xAxes: {
                                 ticks: {
-                                    fontColor: 'grey'
+                                    fontColor: 'lightgrey'
                                 },
                             }
                         },

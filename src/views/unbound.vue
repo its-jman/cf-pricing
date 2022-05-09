@@ -20,7 +20,11 @@
                 ☁ Explaining the costs
             </b><br/>
             <p>
-                Unbound is a bit more complex to calculate costs for and so I have built this tool to help people get a better understanding of the pricing model.
+                Workers Unbound™ is a bit more complex to calculate costs for and so I have built this tool to help people get a better understanding of the pricing model.
+                Unbound is a Worker that does not have CPU limits but bills based on <b>wall</b> time.
+                This is worked out by timing how long your Worker exists, this does mean you are being billed while waiting for HTTP requests.
+                However, it might actually be cheaper for simple workers to be billed on Unbound than Bundled as the per request pricing is far better.
+                You are also given 400,000GB-s with your plan so if your Worker is snappy, you wont have to pay for memory.
                 <Br/>
                 <br/>
                 <b>⚡ Requests:</b>
@@ -33,6 +37,9 @@
                 <b>💾 Memory:</b> Each Worker you execute uses 128mb of memory, this is not changable yet. You are charged per millisecond the Worker runs.
                 <br/>
                 <b>First 400,000-GBs are free.</b>
+                <br/>
+                <br/>
+                <b>As a note: Durable Object costs are the exact same as Unbound workers. You can also use this calculator to work out the pricing however keep in mind that calling a Durable Object from an Unbound worker will result in your bills being effectively doubled as your Unbound worker waits for the Durable Object to complete.</b>
             </p>
         </div>
 
@@ -72,7 +79,7 @@
             <o-input v-if="mode == 'advanced'" type="number" class="field w-full my-2" :min="1" v-model="amount_of_reqs"/>
         </o-field>
 
-        <o-field v-if="ready" :label="`How long does your Worker run for on average? (${human.intComma(pricing.memory_used)}GB-s) ($${(pricing.memory / 100).toFixed(2)})`" :message="`${mode == 'advanced' ? 'Advanced mode: Use decimal to show milliseconds.' : ''} Counted in seconds, billed in milliseconds. Costs $12.50/million GB-s.`">
+        <o-field v-if="ready" :label="`How long does your Worker run for on average? (${human.intComma(pricing.memory_used)}GB-s) ($${(pricing.memory / 100).toFixed(2)})`" :message="`${mode == 'advanced' ? 'Advanced mode: Use decimal to show milliseconds.' : ''} Counted in seconds, billed in milliseconds. 400,000GB-s included, only usage beyond included bundle is shown.  Costs $12.50/million GB-s.`">
             <o-slider v-if="mode == 'simple'" v-model="seconds_per_req" :max="30" :step="0.25" :min="0.25" :custom-formatter="val => val + ' seconds'"></o-slider>
             <o-input v-if="mode == 'advanced'" type="number" class="field w-full my-2" :min="0.50" v-model="seconds_per_req"/>
         </o-field>
@@ -178,7 +185,7 @@
 
                 var gigabytes_used = (memory_used_mb / 1000) // Convert MB-s to GB-s
 
-                gigabytes_used = Math.max(gigabytes_used - 400000, 0) // Compress to 0 if number is below 0
+                gigabytes_used = Math.max(gigabytes_used - 400000, 0)  // Compress to 0 if number is below 0
 
                 this.pricing.memory_used = gigabytes_used
                 this.pricing.memory = gigabytes_used * (this.rates.memory / 1000000) // Turn GB-s to an actual cost per month.
