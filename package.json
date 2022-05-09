@@ -4,11 +4,15 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview --host"
   },
   "dependencies": {
     "@oruga-ui/oruga-next": "^0.5.5",
+    "a17t": "^0.10.1",
+    "humanize": "0.0.9",
+    "humanize-plus": "^1.8.2",
     "vue": "^3.2.33",
+    "vue-numeric": "^2.4.3",
     "vue-router": "^4.0.15"
   },
   "devDependencies": {

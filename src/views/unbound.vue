@@ -9,49 +9,41 @@
             </p>
             <hr/>
             <o-field class="mt-8" label="URL of the Worker" message="Please make sure it is publicly accessable, otherwise we cant check it!">
-                <input class="field my-2" v-model="preview_url" @keypress.enter="test_preview"></input>
+                <input class="field my-2" v-model="preview_url" @keypress.enter="test_preview" />
             </o-field>
             <a @click="test_preview_click" class="rounded-lg w-full flex items-center justify-center bg-purple text-white mr-2 px-4 py-2 cursor-pointer flex flex-row items-center" style="border-radius:0.375rem;">
                 Test URL
             </a>
         </o-modal>
-        <div class="flex flex-row items-center">
-            <div class="flex-grow">
-                <h1 class="title text-purple">
-                    Unbound cost calculator
-                </h1>
-                <h3 class="subtitle text-gray-lighter">
-                    Built by Cerulean, unofficial Workers pricing calculator 
-                </h3>
-            </div>
-            <a href="https://github.com/AggressivelyMeows/workers-unbound-pricing" target="_blank">
-                <svg width="24" height="24" fill="currentColor" class="text-purple mr-3"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.463 2 11.97c0 4.404 2.865 8.14 6.839 9.458.5.092.682-.216.682-.48 0-.236-.008-.864-.013-1.695-2.782.602-3.369-1.337-3.369-1.337-.454-1.151-1.11-1.458-1.11-1.458-.908-.618.069-.606.069-.606 1.003.07 1.531 1.027 1.531 1.027.892 1.524 2.341 1.084 2.91.828.092-.643.35-1.083.636-1.332-2.22-.251-4.555-1.107-4.555-4.927 0-1.088.39-1.979 1.029-2.675-.103-.252-.446-1.266.098-2.638 0 0 .84-.268 2.75 1.022A9.606 9.606 0 0112 6.82c.85.004 1.705.114 2.504.336 1.909-1.29 2.747-1.022 2.747-1.022.546 1.372.202 2.386.1 2.638.64.696 1.028 1.587 1.028 2.675 0 3.83-2.339 4.673-4.566 4.92.359.307.678.915.678 1.846 0 1.332-.012 2.407-.012 2.734 0 .267.18.577.688.48C19.137 20.107 22 16.373 22 11.969 22 6.463 17.522 2 12 2z"></path></svg>
-            </a>
-            <a href="https://twitter.com/ceruthedev" target="_blank">
-                <svg width="20" height="20" fill="currentColor" class="text-purple"><path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path></svg>
-            </a>
-        </div>
-        <hr/>
-        <div class="card ~info mt-4 mb-12">
+        <div class="card ~primary @low mt-4 mb-12 text-sm px-4 py-3">
             <b>
                 ☁ Explaining the costs
-            </b></br>
+            </b><br/>
             <p>
-                Unbound is a bit more complex to calculate costs for and so I have built this tool to help people get a better understanding of the pricing model.<Br/><br/>
+                Unbound is a bit more complex to calculate costs for and so I have built this tool to help people get a better understanding of the pricing model.
+                <Br/>
+                <br/>
                 <b>⚡ Requests:</b>
-                First 1 million requests are free, these are counted if they hit your Worker. With DDoS protection, any requests rejected by Cloudflare will NOT count towards this number.
-                Even if your Worker has an error, it will count towards this number.
-                <br/><br/>
-                <b>💾 Memory:</b> First 400,000-GBs is free. Each Worker you execute uses 128mb of memory, this is not changable yet. You are charged per millisecond the Worker runs.<br/><br/>
+                Every time your Worker executes, you use one request. With DDoS protection, any requests rejected by Cloudflare will NOT count towards this number as your Worker was not executed.
+                If your Worker experiences an error, or returns a non-200 status code, it will still count as a request to be billed.
+                <br/>
+                <b>First 1 million requests are free</b>
+                <br/>
+                <br/>
+                <b>💾 Memory:</b> Each Worker you execute uses 128mb of memory, this is not changable yet. You are charged per millisecond the Worker runs.
+                <br/>
+                <b>First 400,000-GBs are free.</b>
             </p>
         </div>
-        <hr/>
-        <div class="flex flex-row mb-8 items-center">
-            <h1 class="title text-purple block  flex-grow">
+
+        <hr class="border-gray-700 my-4"/>
+
+        <div class="flex flex-col md:flex-row mb-8 items-center">
+            <h1 class="title text-purple-400 block mb-4 md:mb-0 flex-grow">
                 Total: $5 (Paid Worker plan) + ${{(total / 100).toFixed(2)}}
             </h1>
 
-            <a v-if="mode == 'advanced'" @click="mode = 'simple'" class="rounded-lg bg-purple text-white mr-2 px-4 py-2 cursor-pointer flex flex-row items-center" style="border-radius:0.375rem;">
+            <a v-if="mode == 'advanced'" @click="mode = 'simple'" class="text-sm rounded-md bg-purple-500 text-white mr-2 px-4 py-2 cursor-pointer flex flex-row items-center  w-full md:w-auto" style="border-radius:0.375rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -59,7 +51,7 @@
                 Simple
             </a>
 
-            <a v-else @click="mode = 'advanced'" class="rounded-lg bg-purple text-white mr-2 px-4 py-2 cursor-pointer flex flex-row items-center" style="border-radius:0.375rem;">
+            <a v-else @click="mode = 'advanced'" class="text-sm  rounded-md bg-purple-500 text-white mr-2 px-4 py-2 cursor-pointer flex flex-row items-center w-full md:w-auto" style="border-radius:0.375rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -67,37 +59,31 @@
                 Advanced
             </a>
 
-            <a class="rounded-lg bg-purple text-white mr-2 px-4 py-2 cursor-pointer flex flex-row items-center" style="border-radius:0.375rem;" @click="show_preview_modal = true">
+            <a class="text-sm rounded-md bg-purple-500 text-white mr-2 px-4 py-2 cursor-pointer flex flex-row items-center w-full md:w-auto mt-4 md:mt-0" style="border-radius:0.375rem;" @click="show_preview_modal = true">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
                 Test Worker
             </a>
         </div>
+
         <o-field v-if="ready" class="mb-4" :label="`How many requests do you expect to process per month? ($${(pricing.requests / 100).toFixed(2)})`" message="Includes errors, redirects, and successful requests. Costs $0.15/million requests.">
             <o-slider v-if="mode == 'simple'" v-model="amount_of_reqs" :max="10000000" :step="100000"></o-slider>
-            <vue-numeric currency="" v-if="mode == 'advanced'" class="field w-full my-2" v-model="amount_of_reqs" separator=","></vue-numeric>
+            <o-input v-if="mode == 'advanced'" type="number" class="field w-full my-2" :min="1" v-model="amount_of_reqs"/>
         </o-field>
 
-        <o-field v-if="ready" :label="`How long does your Worker run for on average? (${human.intComma(pricing.memory_used)}GB-s) ($${(pricing.memory / 100).toFixed(2)})`" :message="`${mode == 'advanced' ? 'Advanced mode: Use decimal to show milliseconds.' : ''} Counted in seconds. Costs $12.50/million GB-s.`">
+        <o-field v-if="ready" :label="`How long does your Worker run for on average? (${human.intComma(pricing.memory_used)}GB-s) ($${(pricing.memory / 100).toFixed(2)})`" :message="`${mode == 'advanced' ? 'Advanced mode: Use decimal to show milliseconds.' : ''} Counted in seconds, billed in milliseconds. Costs $12.50/million GB-s.`">
             <o-slider v-if="mode == 'simple'" v-model="seconds_per_req" :max="30" :step="0.25" :min="0.25" :custom-formatter="val => val + ' seconds'"></o-slider>
-            <input v-if="mode == 'advanced'" type="number" class="field w-full my-2" :min="0.50" v-model="seconds_per_req" ></input>
+            <o-input v-if="mode == 'advanced'" type="number" class="field w-full my-2" :min="0.50" v-model="seconds_per_req"/>
         </o-field>
-
-        <div class="mt-24">
-            <p class="text-grey-dark text-center text-xs">
-                This website is not affliated with Cloudflare. Information on this page is just an estimate and your prices may be different to the results.<br/>
-                If you need help, or wish to hire me, you can contact me via Twitter (top right), or email:
-                ceru@sponsus.org<br/>
-            </p>
-        </div>
     </div>
 </template> 
 
 <script>
     import VueNumeric from 'vue-numeric'
-    var human = require('humanize-plus')
-    var humanize = require('humanize')
+    import human from 'humanize-plus'
+    import humanize from 'humanize'
+    
 
     export default {
         data: () => ({
@@ -219,7 +205,7 @@
             }, 50)
         },
         components: {
-            VueNumeric,
+            VueNumeric
         }
     }
 </script>

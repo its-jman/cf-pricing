@@ -1,18 +1,7 @@
-import Home from './views/Home.vue'
-import About from './views/About.vue'
-import NotFound from './views/NotFound.vue'
+import UnboundPricing from './views/unbound.vue'
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
-  { path: '/', component: Home, meta: { title: 'Home' } },
-  {
-    path: '/about',
-    meta: { title: 'About' },
-    component: About,
-    // example of route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    // component: () => import('./views/About.vue')
-  },
-  { path: '/:path(.*)', component: NotFound },
+    { path: '/', component: UnboundPricing, meta: { title: 'Unbound', description: 'Unofficial Cloudflare Workers® pricing calculator', logo: 'workers' } },
+    { path: '/r2', component: () => import('./views/r2.vue'), meta: { title: 'R2', description: 'Unofficial Cloudflare R2® pricing calculator', logo: 'r2' } },
 ]
