@@ -45,7 +45,7 @@
             <o-input type="number" class="field w-full my-2" v-model="pricing.writes"/>
         </o-field>
 
-        <o-field v-if="ready" :label="`How many files are you updating and/or deleting?`" :message="`Counted in requests. Costs $4.50/million Class-A requests`">
+        <o-field v-if="ready" :label="`How many files are you updating per month?`" :message="`Counted in requests. Costs $4.50/million Class-A requests`">
             <o-input type="number" class="field w-full my-2" v-model="pricing.update_deletes"/>
         </o-field>
     </div>
