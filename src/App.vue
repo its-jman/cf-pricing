@@ -12,7 +12,7 @@
                             {{$route.meta.title}} cost calculator
                         </h1>
                         <h3 class="subtitle text-gray-400">
-                            {{$route.meta.description}} 
+                            {{$route.meta.description}}
                         </h3>
                     </div>
                 </div>
@@ -34,6 +34,9 @@
                 </router-link>
                 <router-link active-class="bg-purple-500" class="text-sm rounded-md bg-gray-800 text-white px-3 py-1 cursor-pointer flex flex-row items-center w-full md:w-auto" to="/r2">
                     Cloudflare R2™
+                </router-link>
+                <router-link active-class="bg-purple-500" class="text-sm rounded-md bg-gray-800 text-white px-3 py-1 cursor-pointer flex flex-row items-center w-full md:w-auto" to="/durable-objects">
+                    Cloudflare Durable Objects™
                 </router-link>
                 <div class="hidden md:block md:flex-grow"></div>
                 <a class="text-sm rounded-md bg-gray-800 text-white px-3 py-1 cursor-pointer flex flex-row items-center w-full md:w-auto" href="https://discord.gg/2hCYBhvuJa" target="_blank">
