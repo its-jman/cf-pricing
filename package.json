@@ -12,7 +12,7 @@
     "humanize": "0.0.9",
     "humanize-plus": "^1.8.2",
     "vue": "^3.2.33",
-    "vue-numeric": "^2.4.3",
+    "vue-numeric": "^2.5.0",
     "vue-router": "^4.0.15"
   },
   "devDependencies": {
