@@ -69,9 +69,9 @@ const AWS_PRICING = {
   per1MGbS: 13.33,
 };
 
-const wss = $ref(100);
+const wss = $ref(1000);
 const connHoursPerDay = $ref(8);
-const wsToDoPercentage = $ref(50);
+const wsToDoPercentage = $ref(35);
 
 const msgsPerMin = $ref(12);
 const computeMsPerMsg = $ref(3);
